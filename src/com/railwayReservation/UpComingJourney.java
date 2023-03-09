@@ -21,7 +21,7 @@ import java.sql.Statement;
 import java.awt.Dimension;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
