@@ -1,15 +1,8 @@
 package com.railwayReservation;
 
-import javax.swing.JFrame;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import javax.swing.JTable;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,8 +11,15 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class CancelTicket extends JFrame implements ActionListener {
@@ -46,8 +46,8 @@ public class CancelTicket extends JFrame implements ActionListener {
 		Cancelbtn.addActionListener(new ActionListener() {
 			@SuppressWarnings("unused")
 			public void actionPerformed(ActionEvent e) {
-			DefaultTableModel model=(DefaultTableModel) table.getModel();
-		
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+
 				int row = table.getSelectedRow();
 				String cell = (String) table.getModel().getValueAt(row, 0);
 				try {
@@ -60,10 +60,8 @@ public class CancelTicket extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Successfully Canceled");
 
 				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				model.removeRow(table.getSelectedRow());
@@ -95,11 +93,9 @@ public class CancelTicket extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost/rail", "root", "admin");
+					Connection con = MySQLConnection.getConnection();
 
 					Statement st = con.createStatement();
-
 					String sql = "SELECT * FROM booking_details";
 					ResultSet rs = st.executeQuery(sql);
 					ResultSetMetaData rsmd = rs.getMetaData();
@@ -115,7 +111,7 @@ public class CancelTicket extends JFrame implements ActionListener {
 						String trainNo;
 						String amount;
 						String age;
-						String fromAddress, toAddress, date, name, address, email, gender,pnr;
+						String fromAddress, toAddress, date, name, address, email, gender, pnr;
 
 						while (rs.next()) {
 							srNo = rs.getString(1);
@@ -129,10 +125,10 @@ public class CancelTicket extends JFrame implements ActionListener {
 							email = rs.getString(9);
 							age = rs.getString(10);
 							gender = rs.getString(11);
-							pnr=rs.getString(12);
-							
+							pnr = rs.getString(12);
+
 							String[] row = { srNo, trainNo, fromAddress, toAddress, date, amount, name, address, email,
-									age, gender,pnr};
+									age, gender, pnr };
 							model.addRow(row);
 
 						}
@@ -143,7 +139,6 @@ public class CancelTicket extends JFrame implements ActionListener {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-
 			}
 		});
 		seebtn.setFont(new Font("Times New Roman", Font.BOLD, 17));
@@ -153,12 +148,6 @@ public class CancelTicket extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
-
-		new CancelTicket();
-
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -166,8 +155,6 @@ public class CancelTicket extends JFrame implements ActionListener {
 			this.dispose();
 			MainPage main = new MainPage();
 			main.setVisible(true);
-
 		}
-
 	}
 }

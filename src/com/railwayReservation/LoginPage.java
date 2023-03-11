@@ -1,8 +1,10 @@
 package com.railwayReservation;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import java.awt.Color;
 import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
@@ -88,7 +89,6 @@ public class LoginPage extends JFrame implements ActionListener {
 		getContentPane().setLayout(null);
 		setSize(567, 415);
 		setVisible(true);
-
 	}
 
 	@Override
@@ -97,16 +97,16 @@ public class LoginPage extends JFrame implements ActionListener {
 		String userName = txtField.getText();
 		@SuppressWarnings("deprecation")
 		String passWord = passField.getText();
-		RailMySqlConnection mySqlConnection = new RailMySqlConnection();
 
-		boolean userPresent = mySqlConnection.isUserPresent(userName, passWord);
-		
+		boolean userPresent = RailMySqlConnection.isUserPresent(userName, passWord);
+
 		txtField.setText("");
 		passField.setText("");
 		txtField.requestFocus();
-		
+
 		if (userPresent && e.getSource() == button1) {
-			JOptionPane.showMessageDialog(button1, "Successfully log In","Congratulations",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(button1, "Successfully log In", "Congratulations",
+					JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 			MainPage second = new MainPage();
 			second.setVisible(true);
@@ -114,14 +114,11 @@ public class LoginPage extends JFrame implements ActionListener {
 			this.dispose();
 			NewRegistration myRegistration = new NewRegistration();
 			myRegistration.setVisible(true);
-		}
-
-		else if (e.getSource() == button2) {
+		} else if (e.getSource() == button2) {
 			if (JOptionPane.showConfirmDialog(button2, "Confirm if you want to exit", "Login System",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
 				System.exit(0);
 			}
-
 		} else {
 			JOptionPane.showMessageDialog(button1, "Login Failed", "Somthing went wrong", 0);
 		}

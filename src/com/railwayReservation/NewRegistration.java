@@ -1,8 +1,10 @@
 package com.railwayReservation;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,9 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
-import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class NewRegistration extends JFrame implements ActionListener {
@@ -141,44 +142,36 @@ public class NewRegistration extends JFrame implements ActionListener {
 		setTitle("Registration Form");
 		setSize(470, 545);
 		setVisible(true);
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		String name = txtFirstName.getText();
-		String lName = txtLastName.getText();
 		if (e.getSource() == register) {
 
-			RailMySqlConnection mySqlConnection = new RailMySqlConnection();
 			String fname = txtFirstName.getText();
 			String lname = txtLastName.getText();
 			String email = txtEmail.getText();
-			String password = txtPassword.getText();// password logic
-			// password should one lowercase, oneuppercase and one number
+			String password = txtPassword.getText();
 			int age = Integer.parseInt(txtAge.getText());
 			long phone = Long.parseLong(txtPhoneNumber.getText());
-			
-			 
-			if (txtFirstName.getText().trim().isEmpty()&& txtLastName.getText().trim().isEmpty() && txtEmail.getText().trim().isEmpty()
-					&& txtPassword.getText().trim().isEmpty() && txtAge.getText().trim().isEmpty()
-					&& txtPhoneNumber.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Blank Fields Not Allowed");
-			}
 
-			else if (fname != null && lname != null && email != null && password != null && age != 0) {
-				mySqlConnection.insertDataIntoRegistrationTable(fname, lname, email, password, age, phone);
+			if (txtFirstName.getText().trim().isEmpty() && txtLastName.getText().trim().isEmpty()
+					&& txtEmail.getText().trim().isEmpty() && txtPassword.getText().trim().isEmpty()
+					&& txtAge.getText().trim().isEmpty() && txtPhoneNumber.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Blank Fields Not Allowed");
+			} else if (fname != null && lname != null && email != null && password != null && age != 0) {
+				RailMySqlConnection.insertDataIntoRegistrationTable(fname, lname, email, password, age, phone);
 				JOptionPane.showMessageDialog(null, "SuccessFully Registered");
 			}
-			
-			 txtFirstName.setText(""); txtLastName.setText(""); txtEmail.setText("");
-			 txtPassword.setText(""); txtAge.setText(""); txtPhoneNumber.setText("");
-			 txtFirstName.requestFocus();
-			
 
-			// fields can't be null
-			// every filed should have value
+			txtFirstName.setText("");
+			txtLastName.setText("");
+			txtEmail.setText("");
+			txtPassword.setText("");
+			txtAge.setText("");
+			txtPhoneNumber.setText("");
+			txtFirstName.requestFocus();
 		} else if (e.getSource() == cancel) {
 			if (JOptionPane.showConfirmDialog(cancel, "Confirm if you want to exit", "Login System",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
@@ -189,9 +182,5 @@ public class NewRegistration extends JFrame implements ActionListener {
 			LoginPage previousPage = new LoginPage();
 			previousPage.setVisible(true);
 		}
-	}
-
-	public static void main(String[] args) {
-		new NewRegistration();
 	}
 }

@@ -1,35 +1,25 @@
 package com.railwayReservation;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JFrame;
-import javax.swing.JProgressBar;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.SwingConstants;
-import java.awt.ComponentOrientation;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.awt.Dimension;
-import javax.swing.UIManager;
-import javax.swing.JLabel;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JSeparator;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import java.awt.Rectangle;
 
 @SuppressWarnings("serial")
 public class UpComingJourney extends JFrame implements ActionListener {
@@ -80,9 +70,7 @@ public class UpComingJourney extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost/rail", "root", "admin");
-
+					Connection con = MySQLConnection.getConnection();
 					Statement st = con.createStatement();
 
 					String sql = "SELECT * FROM rail.booking_details WHERE date> DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
@@ -117,20 +105,14 @@ public class UpComingJourney extends JFrame implements ActionListener {
 							String[] row = { srNo, trainNo, fromAddress, toAddress, date, amount, name, address, email,
 									age, gender };
 							model.addRow(row);
-
 						}
 					}
 					st.close();
 					con.close();
-
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-
 			}
-
-				
-			
 		});
 		upcomingBtn.setBackground(new Color(0, 64, 64));
 		upcomingBtn.setForeground(new Color(255, 255, 255));
@@ -144,8 +126,7 @@ public class UpComingJourney extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost/rail", "root", "admin");
+					Connection con = MySQLConnection.getConnection();
 
 					Statement st = con.createStatement();
 
@@ -181,19 +162,13 @@ public class UpComingJourney extends JFrame implements ActionListener {
 							String[] row = { srNo, trainNo, fromAddress, toAddress, date, amount, name, address, email,
 									age, gender };
 							model.addRow(row);
-
 						}
 					}
 					st.close();
 					con.close();
-
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-
-
-				
-				
 			}
 		});
 		completedBtn.setBackground(new Color(0, 64, 64));
@@ -224,10 +199,6 @@ public class UpComingJourney extends JFrame implements ActionListener {
 		mainpage_btn.setBackground(new Color(0, 64, 64));
 		mainpage_btn.setBounds(10, 568, 168, 40);
 		getContentPane().add(mainpage_btn);
-		
-	
-
-		
 		setVisible(true);
 	}
 	
@@ -238,16 +209,5 @@ public class UpComingJourney extends JFrame implements ActionListener {
 			main.setVisible(true);
 			this.dispose();
 		}
-		
-		
-	
-
-	}
-
-	public static void main(String[] args) {
-		UpComingJourney upComingJourney=new UpComingJourney();
-		upComingJourney.setVisible(true);
-		
-	
 	}
 }

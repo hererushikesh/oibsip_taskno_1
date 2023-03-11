@@ -1,35 +1,27 @@
 package com.railwayReservation;
 
-import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.Panel;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import java.awt.Component;
-import java.awt.Rectangle;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.cj.*;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JButton;
-import java.awt.Dimension;
-
-
-public class MyBooking extends JFrame  implements ActionListener{
+public class MyBooking extends JFrame implements ActionListener {
 	public JTable table;
 	JButton mainbtn;
 
@@ -72,11 +64,9 @@ public class MyBooking extends JFrame  implements ActionListener{
 		showBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost/rail", "root", "admin");
+					Connection con = MySQLConnection.getConnection();
 
 					Statement st = con.createStatement();
-
 					String sql = "SELECT * FROM booking_details";
 					ResultSet rs = st.executeQuery(sql);
 					ResultSetMetaData rsmd = rs.getMetaData();
@@ -109,15 +99,11 @@ public class MyBooking extends JFrame  implements ActionListener{
 							String[] row = { srNo, trainNo, fromAddress, toAddress, date, amount, name, address, email,
 									age, gender };
 							model.addRow(row);
-
 						}
-						
 					}
-
 				} catch (Exception ex) {
-						ex.printStackTrace();
+					ex.printStackTrace();
 				}
-
 			}
 		});
 		showBtn.setSize(new Dimension(10, 10));
@@ -127,30 +113,21 @@ public class MyBooking extends JFrame  implements ActionListener{
 		showBtn.setBackground(new Color(0, 128, 128));
 		showBtn.setBounds(30, 118, 147, 44);
 		getContentPane().add(showBtn);
-		
+
 		mainbtn = new JButton("Main Page");
 		mainbtn.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		mainbtn.setBounds(28, 185, 149, 44);
 		mainbtn.addActionListener(this);
 		getContentPane().add(mainbtn);
 		setVisible(true);
-
-	}
-
-	public static void main(String[] args) {
-		new MyBooking();
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		if(e.getSource()==mainbtn) {
+		if (e.getSource() == mainbtn) {
 			this.dispose();
-			MainPage main=new MainPage();
+			MainPage main = new MainPage();
 			main.setVisible(true);
 		}
-		
 	}
-
 }

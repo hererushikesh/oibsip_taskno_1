@@ -1,34 +1,27 @@
 package com.railwayReservation;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JSeparator;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.mysql.cj.result.Row;
-
-import java.awt.Component;
-import java.awt.Panel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.ScrollPane;
-import java.awt.Button;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class Booking extends JFrame implements ActionListener {
@@ -50,7 +43,6 @@ public class Booking extends JFrame implements ActionListener {
 	Booking() {
 		getContentPane().setBackground(new Color(64, 0, 64));
 
-		JFrame frame = new JFrame();
 		setAlwaysOnTop(true);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,8 +88,6 @@ public class Booking extends JFrame implements ActionListener {
 				String date = (String) date_textField.getText();
 				int amountVale = Integer.parseInt(amount.getText());
 
-				BookingSql bookingsql = new BookingSql();
-
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 
 				for (int i = 0; model.getRowCount() > i; i++) {
@@ -107,24 +97,14 @@ public class Booking extends JFrame implements ActionListener {
 					String email = (String) model.getValueAt(i, 2);
 					String age = (String) model.getValueAt(i, 3);
 					String gender = (String) model.getValueAt(i, 4);
-
-//					System.out.println("Row: " + i + " Col 0: " + name);
-//					System.out.println("Row: " + i + " Col 1: " + address);
-//					System.out.println("Row: " + i + " Col 2: " + email);
-//					System.out.println("Row: " + i + " Col 3: " + age);
-//					System.out.println("Row: " + i + " Col 4: " + gender);
-
-					// bookingsql.insertDataIntoBookingTable(i, gender, gender, age, i, name,
-					// address, email, i, gender)
 					int age1 = Integer.parseInt(age);
 					int trainNumer = Integer.parseInt(TrainNumber);
-					bookingsql.insertDataIntoBookingTable(trainNumer, fromAddress, toAddress, date, amountVale, name,
+					BookingSql.insertDataIntoBookingTable(trainNumer, fromAddress, toAddress, date, amountVale, name,
 							address, email, age1, gender);
-
 				}
 
 				JOptionPane.showMessageDialog(btnSubmit, "Successfully booked!");
-				
+
 			}
 		});
 		btnSubmit.setBounds(10, 338, 138, 30);
@@ -352,23 +332,15 @@ public class Booking extends JFrame implements ActionListener {
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		table.getColumnModel().getColumn(3).setPreferredWidth(45);
 		table.getColumnModel().getColumn(4).setPreferredWidth(60);
-
 		this.setVisible(true);
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==main_btn) {
-		this.dispose();
- 		MainPage back=new MainPage();
- 		back.setVisible(true);
+		if (e.getSource() == main_btn) {
+			this.dispose();
+			MainPage back = new MainPage();
+			back.setVisible(true);
 		}
-
-	}
-
-	public static void main(String[] args) {
-		new Booking();
-
 	}
 }

@@ -215,51 +215,31 @@ public class MainPage extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent eve) {
-
-//		System.out.println(" actiopn button pressed"+eve.getActionCommand()+" source"+  eve.getSource());
-
 		if (eve.getSource() == bookTicket_btn) {
 			this.dispose();
 			Booking booking = new Booking();
 			booking.setVisible(true);
-
 		} else if (eve.getSource() == myBooking_btn) {
 			this.dispose();
 			MyBooking myBooking = new MyBooking();
 			myBooking.setVisible(true);
-
 		} else if (eve.getSource() == cancelTicket_btn) {
 			this.dispose();
 			CancelTicket cancelTicket = new CancelTicket();
 			cancelTicket.setVisible(true);
-
 		} else if (eve.getSource() == upComingJourney_btn) {
 			this.dispose();
-			UpComingJourney journey=new UpComingJourney();
+			UpComingJourney journey = new UpComingJourney();
 			journey.setVisible(true);
-
 		} else if (eve.getSource() == back_btn) {
 			this.dispose();
 			LoginPage backPage = new LoginPage();
 			backPage.setVisible(true);
-
-		}
-
-		else if (eve.getSource() == cancelProgram_btn) {
+		} else if (eve.getSource() == cancelProgram_btn) {
 			if (JOptionPane.showConfirmDialog(cancelProgram_btn, "Confirm if you want to exit", "To Quite",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
 				System.exit(0);
 			}
-		} else if (eve.getSource() == love_btn) {
-			System.out.println("love khup sara");
-
 		}
 	}
-
-	public static void main(String[] args) {
-
-		new MainPage();
-
-	}
-
 }
